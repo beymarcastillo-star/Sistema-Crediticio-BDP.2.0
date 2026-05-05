@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Diagrama de Despliegue · BDP S.A.M.</title>
+<meta name="viewport" content="width=1920, initial-scale=1" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --ink:        #0B1220;
+    --ink-2:      #1A2236;
+    --paper:      #F5F2EA;
+    --paper-2:    #ECE6D6;
+    --line:       #2A3550;
+    --line-soft:  #C9C2B0;
+    --navy:       #14305C;
+    --navy-2:     #1E4582;
+    --cyan:       #2BB3C0;
+    --amber:      #E8A33D;
+    --crimson:    #C0492B;
+    --moss:       #5C7A3E;
+    --violet:     #6B5BD2;
+    --rose:       #C66B86;
+  }
+  [data-theme="dark"] {
+    --ink:       #E7ECF5;
+    --ink-2:     #B6C0D6;
+    --paper:     #0A0F1C;
+    --paper-2:   #11192C;
+    --line:      #2C3A5C;
+    --line-soft: #1B2540;
+    --navy:      #6FA8FF;
+    --navy-2:    #8FBCFF;
+    --cyan:      #4DD3DF;
+    --amber:     #F0B85A;
+    --crimson:   #F08066;
+    --moss:      #9CC074;
+    --violet:    #9B8DE8;
+    --rose:      #E89AAF;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #0a0a0a;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: var(--ink);
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  #stage {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: #0a0a0a;
+  }
+  #poster {
+    width: 1920px; height: 1080px;
+    transform-origin: center center;
+    background: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--line) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--line) 7%, transparent) 1px, transparent 1px),
+      linear-gradient(to right, color-mix(in oklab, var(--line) 14%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--line) 14%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
+    pointer-events: none;
+  }
+  .layer { position: absolute; inset: 0; }
+  .header {
+    position: absolute; left: 56px; top: 40px; right: 56px;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    z-index: 5;
+  }
+  .h-left .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-2); margin-bottom: 6px;
+  }
+  .h-left h1 {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 56px;
+    line-height: 1; margin: 0; color: var(--ink); letter-spacing: -0.01em;
+  }
+  .h-left h1 .accent { color: var(--navy); font-style: italic; }
+  .h-left .sub { margin-top: 10px; font-size: 18px; color: var(--ink-2); max-width: 720px; }
+  .h-right {
+    text-align: right; font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--ink-2); letter-spacing: 0.08em;
+  }
+  .h-right .stamp {
+    display: inline-block; padding: 6px 12px;
+    border: 1.5px solid var(--line); border-radius: 2px; margin-bottom: 8px;
+    color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em;
+  }
+  .h-right .meta-line { display: block; margin-top: 2px; }
+  .footer {
+    position: absolute; left: 56px; right: 56px; bottom: 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-2);
+    letter-spacing: 0.1em; text-transform: uppercase; z-index: 5;
+  }
+  .footer .corner { display: flex; gap: 18px; align-items: center; }
+  .footer .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--navy); }
+  .node {
+    position: absolute; background: var(--paper); border: 1.5px solid var(--line);
+    border-radius: 6px; padding: 14px 16px 12px 16px; cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    z-index: 3;
+    box-shadow: 0 1px 0 0 color-mix(in oklab, var(--ink) 8%, transparent),
+                0 8px 24px -16px color-mix(in oklab, var(--ink) 30%, transparent);
+  }
+  .node:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 0 0 color-mix(in oklab, var(--ink) 14%, transparent),
+                0 16px 32px -12px color-mix(in oklab, var(--ink) 35%, transparent);
+    border-color: var(--navy); z-index: 6;
+  }
+  .node[data-active="true"] {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--navy) 22%, transparent),
+                0 16px 32px -12px color-mix(in oklab, var(--ink) 35%, transparent);
+  }
+  .stereo {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    color: var(--ink-2); letter-spacing: 0.04em; margin-bottom: 4px;
+  }
+  .stereo::before { content: "«"; margin-right: 1px; }
+  .stereo::after  { content: "»"; margin-left: 1px; }
+  .node .title { font-weight: 600; font-size: 17px; color: var(--ink); line-height: 1.15; letter-spacing: -0.005em; }
+  .node .title .icon { display: inline-block; width: 18px; height: 18px; margin-right: 7px; vertical-align: -3px; }
+  .node .desc { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-2); margin-top: 8px; line-height: 1.4; }
+  .node .pills { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .pill {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 6px;
+    border-radius: 3px; background: color-mix(in oklab, var(--navy) 8%, transparent);
+    color: var(--navy); letter-spacing: 0.04em;
+    border: 1px solid color-mix(in oklab, var(--navy) 20%, transparent);
+  }
+  .node[data-cat="client"]   { border-left: 4px solid var(--violet); }
+  .node[data-cat="edge"]     { border-left: 4px solid var(--cyan); }
+  .node[data-cat="app"]      { border-left: 4px solid var(--navy); }
+  .node[data-cat="data"]     { border-left: 4px solid var(--moss); }
+  .node[data-cat="external"] { border-left: 4px solid var(--amber); }
+  .node[data-cat="security"] { border-left: 4px solid var(--crimson); }
+  .device {
+    position: absolute; border: 1.5px dashed var(--line); border-radius: 8px;
+    z-index: 2; background: color-mix(in oklab, var(--paper-2) 60%, transparent);
+  }
+  .device .device-label {
+    position: absolute; top: -12px; left: 16px; background: var(--paper);
+    padding: 0 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .device .device-label .num { color: var(--navy); font-weight: 700; margin-right: 6px; }
+  .edges path { fill: none; stroke: color-mix(in oklab, var(--line) 70%, transparent); stroke-width: 1.5; }
+  .edges path.https { stroke: var(--navy); }
+  .edges path.tls { stroke: var(--crimson); stroke-dasharray: 6 4; }
+  .edges path.tcp { stroke: var(--moss); }
+  .edges path.async { stroke: var(--amber); stroke-dasharray: 2 4; }
+  .edges path.replication { stroke: var(--violet); stroke-dasharray: 8 4 2 4; }
+  .packet { fill: var(--cyan); stroke: var(--paper); stroke-width: 1.5; }
+  .packet.https { fill: var(--navy); }
+  .packet.tcp { fill: var(--moss); }
+  .packet.async { fill: var(--amber); }
+  .packet.replication { fill: var(--violet); }
+  .packet.tls { fill: var(--crimson); }
+  .edge-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; fill: var(--ink-2);
+    paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round;
+  }
+  .panel {
+    position: absolute; top: 88px; right: 56px; width: 380px;
+    background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px;
+    padding: 22px 24px 24px 24px; z-index: 30;
+    box-shadow: 0 24px 48px -16px color-mix(in oklab, var(--ink) 40%, transparent);
+    transform-origin: top right; animation: panelIn .26s cubic-bezier(.2,.7,.3,1);
+  }
+  @keyframes panelIn { from { opacity:0; transform:translateY(-6px) scale(.98); } to { opacity:1; transform:none; } }
+  .panel .panel-stereo { font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2); }
+  .panel h3 { font-family:'Fraunces',serif; font-size:26px; font-weight:600; margin:6px 0 4px 0; letter-spacing:-0.01em; }
+  .panel .panel-cat { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--navy); text-transform:uppercase; letter-spacing:.12em; margin-bottom:14px; }
+  .panel .panel-section { margin-top:14px; border-top:1px solid var(--line-soft); padding-top:12px; }
+  .panel .panel-section h4 { font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-2); margin:0 0 8px 0; font-weight:500; }
+  .panel ul { margin:0; padding:0; list-style:none; }
+  .panel ul li { font-size:13px; color:var(--ink); padding:3px 0; display:flex; align-items:flex-start; gap:8px; }
+  .panel ul li::before { content:""; flex:0 0 auto; width:5px; height:5px; border-radius:50%; background:var(--navy); margin-top:7px; }
+  .panel .kv { display:flex; gap:10px; font-family:'IBM Plex Mono',monospace; font-size:12px; padding:3px 0; }
+  .panel .kv .k { color:var(--ink-2); flex:0 0 95px; }
+  .panel .kv .v { color:var(--ink); }
+  .panel .panel-close {
+    position:absolute; top:14px; right:14px; width:24px; height:24px;
+    border:1.5px solid var(--line); background:transparent; border-radius:50%;
+    display:grid; place-items:center; cursor:pointer; color:var(--ink);
+    font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1; transition:all .18s;
+  }
+  .panel .panel-close:hover { background:var(--ink); color:var(--paper); }
+  .legend {
+    position:absolute; left:56px; bottom:70px; display:flex; gap:22px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-2); z-index:5; letter-spacing:.04em;
+  }
+  .legend-item { display:flex; align-items:center; gap:8px; }
+  .legend-line { width:28px; height:2px; }
+  .legend-line.https { background:var(--navy); }
+  .legend-line.tls { background:repeating-linear-gradient(to right,var(--crimson) 0 6px,transparent 6px 10px); }
+  .legend-line.tcp { background:var(--moss); }
+  .legend-line.async { background:repeating-linear-gradient(to right,var(--amber) 0 2px,transparent 2px 6px); }
+  .legend-line.replication { background:repeating-linear-gradient(to right,var(--violet) 0 8px,transparent 8px 12px,var(--violet) 12px 14px,transparent 14px 18px); }
+  .reg-mark { position:absolute; width:18px; height:18px; border:1.5px solid var(--ink-2); z-index:4; opacity:0.55; }
+  .reg-mark.tl { top:24px; left:24px; border-right:none; border-bottom:none; }
+  .reg-mark.tr { top:24px; right:24px; border-left:none; border-bottom:none; }
+  .reg-mark.bl { bottom:24px; left:24px; border-right:none; border-top:none; }
+  .reg-mark.br { bottom:24px; right:24px; border-left:none; border-top:none; }
+  .hidden-layer { opacity:0.08 !important; pointer-events:none; transition:opacity .3s; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="poster">
+    <div id="root"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script>
+(function() {
+  function fit() {
+    var poster = document.getElementById('poster');
+    if (!poster) return;
+    var sw = window.innerWidth, sh = window.innerHeight;
+    if (sw < 2 || sh < 2) { requestAnimationFrame(fit); return; }
+    var scale = Math.min(sw / 1920, sh / 1080);
+    poster.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(document.documentElement);
+  requestAnimationFrame(fit);
+  fit();
+})();
+</script>
+
+<script type="text/babel">
+/* ═══════════════════════════════════════════
+   1. TWEAKS PANEL
+═══════════════════════════════════════════ */
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    background:rgba(250,249,247,.88);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:pointer;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:pointer;padding:4px 6px;line-height:1.2}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:pointer;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(true);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight  = Math.max(PAD, window.innerWidth  - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight,  Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right  = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    const ro = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(clampToViewport) : null;
+    if (ro) ro.observe(document.documentElement);
+    else window.addEventListener('resize', clampToViewport);
+    return () => { if (ro) ro.disconnect(); else window.removeEventListener('resize', clampToViewport); };
+  }, [open, clampToViewport]);
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight  = window.innerWidth  - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = { x: startRight - (ev.clientX - sx), y: startBottom - (ev.clientY - sy) };
+      clampToViewport();
+    };
+    const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return (
+    <button onClick={() => setOpen(true)}
+      style={{ position:'fixed', right:16, bottom:16, zIndex:9999, padding:'8px 14px',
+               background:'rgba(20,48,92,.9)', color:'#fff', border:'none', borderRadius:10,
+               fontFamily:'IBM Plex Mono, monospace', fontSize:12, cursor:'pointer',
+               backdropFilter:'blur(12px)' }}>
+      ⚙ Tweaks
+    </button>
+  );
+
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" onClick={() => setOpen(false)}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ label, title, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label || title}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+  return (
+    <div className="twk-row">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <div ref={trackRef} className="twk-seg">
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" onClick={() => onChange(o.value)}>{o.label}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   2. DIAGRAM DATA
+═══════════════════════════════════════════ */
+const NODES = [
+  {
+    id: "browser", cat: "client", stereo: "device", title: "Navegador Web", icon: "monitor",
+    x: 80, y: 230, w: 250, h: 132,
+    desc: "Analistas, Jefe de Comité, Auditor.\nResolución: 1280×720 mín.",
+    pills: ["Chrome 100+", "Firefox", "Edge"],
+    detail: {
+      role: "Cliente principal del sistema (oficinas BDP)",
+      tech: [["Tipo","Dispositivo de escritorio"],["Acceso","HTTPS via internet/intranet"],["Sesión","JWT en memoria (1h)"],["Roles","Admin · Analista · Jefe · Auditor"]],
+      notes: ["Renderiza React 18 SPA servida estáticamente","Mantiene token JWT + refresh automático","Bloqueo automático tras 3 intentos fallidos (HU-01)"],
+      hus: ["HU-01","HU-03","HU-04","HU-05","HU-12","HU-11"]
+    }
+  },
+  {
+    id: "field", cat: "client", stereo: "device", title: "Tablet de Campo", icon: "tablet",
+    x: 80, y: 392, w: 250, h: 156,
+    desc: "Oficiales en zonas rurales.\nOpera offline, sincroniza al volver.",
+    pills: ["PWA", "IndexedDB", "Service Worker"],
+    detail: {
+      role: "Cliente offline-first para trabajo agropecuario en campo",
+      tech: [["Tipo","Dispositivo móvil PWA"],["Caché","Service Worker + assets"],["Persistencia","IndexedDB (datos pendientes)"],["Sync","Automática al detectar conexión"]],
+      notes: ["Captura visitas y mediciones de hato sin red (HU-10)","Cola de sincronización con reintentos exponenciales","Mismos JWT y RBAC que la versión web"],
+      hus: ["HU-10","HU-06","HU-07"]
+    }
+  },
+  {
+    id: "auditor", cat: "client", stereo: "device", title: "Estación Auditoría", icon: "shield-user",
+    x: 80, y: 578, w: 250, h: 124,
+    desc: "Acceso solo lectura al log WORM.\nExportes a PDF/Excel.",
+    pills: ["Read-only", "RBAC: Auditor"],
+    detail: {
+      role: "Consulta del registro inalterable de auditoría",
+      tech: [["Acceso","HTTPS · rol Auditor"],["Exporta","jsPDF · ExcelJS"],["Cobertura","100% de acciones críticas"]],
+      notes: ["Solo lectura del log encadenado SHA-256 (HU-02)","No puede modificar ni eliminar registros"],
+      hus: ["HU-02"]
+    }
+  },
+  {
+    id: "ssl", cat: "security", stereo: "execution environment", title: "Terminación SSL/TLS", icon: "lock",
+    x: 410, y: 230, w: 240, h: 116,
+    desc: "Certificado X.509 · TLS 1.3.\nHSTS habilitado.",
+    pills: ["TLS 1.3", "HSTS", "X.509"],
+    detail: {
+      role: "Cifrado extremo a extremo del tráfico cliente↔servidor",
+      tech: [["Protocolo","TLS 1.3 (TLS 1.2 fallback)"],["Cert","X.509 institucional BDP"],["HSTS","max-age=31536000"],["Cipher","AEAD (AES-GCM, ChaCha20)"]],
+      notes: ["Termina TLS antes del balanceador","Cifra integraciones con CORE bancario y Fintech","Renovación automatizada cada 90 días"],
+      hus: ["HU-01","HU-09"]
+    }
+  },
+  {
+    id: "lb", cat: "edge", stereo: "execution environment", title: "Load Balancer", icon: "git-branch",
+    x: 410, y: 380, w: 240, h: 152,
+    desc: "Reverse proxy + balanceo round-robin.\nRate-limit y health checks.",
+    pills: ["Nginx", "Round-Robin", "Rate-Limit"],
+    detail: {
+      role: "Distribución de carga entre instancias del App Server",
+      tech: [["Software","Nginx 1.25+"],["Algoritmo","Round-robin con sticky session JWT"],["Health","GET /health cada 5s"],["Rate-limit","100 req/s por IP"],["WAF","Reglas OWASP Top 10"]],
+      notes: ["Soporta 500 usuarios concurrentes (objetivo BDP)","Failover automático ante caída de instancia","Sirve también assets estáticos del frontend"],
+      hus: ["HU-03","HU-04","HU-09"]
+    }
+  },
+  {
+    id: "cdn", cat: "edge", stereo: "artifact", title: "CDN · Estáticos", icon: "cloud",
+    x: 410, y: 562, w: 240, h: 120,
+    desc: "Bundle Vite + assets.\nCache-Control inmutable.",
+    pills: ["Vite build", "Hashed", "1y cache"],
+    detail: {
+      role: "Distribución de assets estáticos (JS, CSS, fuentes, imágenes)",
+      tech: [["Origen","Vite production build"],["Hashing","Por contenido (cache-busting)"],["TTL","1 año (immutable)"],["Compresión","Brotli + gzip"]],
+      notes: ["Reduce carga del balanceador","Versionado por commit hash"],
+      hus: []
+    }
+  },
+  {
+    id: "app1", cat: "app", stereo: "execution environment", title: "App Server · Nodo 1", icon: "server",
+    x: 760, y: 252, w: 280, h: 188,
+    desc: "Node.js 20 · Express 4.\nMonolito modular activo-activo.",
+    pills: ["Node 20 LTS", "Express 4", "PM2"],
+    detail: {
+      role: "Instancia primaria del backend monolítico modular",
+      tech: [["Runtime","Node.js 20 LTS"],["Framework","Express 4"],["Proceso","PM2 cluster (4 workers)"],["RAM","8 GB · CPU 4 vCPU"]],
+      notes: ["Despliega TODOS los módulos del monolito","Comunicación inter-módulo por imports (cero latencia)","Logs estructurados a archivo + stdout"],
+      hus: ["EP01-EP06"]
+    }
+  },
+  {
+    id: "app2", cat: "app", stereo: "execution environment", title: "App Server · Nodo 2", icon: "server",
+    x: 760, y: 462, w: 280, h: 188,
+    desc: "Réplica activa-activa.\nFailover transparente.",
+    pills: ["Node 20 LTS", "Express 4", "PM2"],
+    detail: {
+      role: "Instancia secundaria — alta disponibilidad",
+      tech: [["Runtime","Node.js 20 LTS"],["Framework","Express 4"],["Proceso","PM2 cluster (4 workers)"],["Modo","Activo-activo (no standby)"]],
+      notes: ["Idéntica al Nodo 1; el balanceador alterna","Permite reinicios sin downtime (rolling deploy)"],
+      hus: ["EP01-EP06"]
+    }
+  },
+  {
+    id: "modules", cat: "app", stereo: "deployment spec", title: "Módulos del Monolito", icon: "boxes",
+    x: 760, y: 678, w: 280, h: 122,
+    desc: "8 módulos funcionales.\nTests Jest · cobertura 95%.",
+    pills: ["auth", "solicitudes", "evaluacion", "+5"],
+    detail: {
+      role: "Estructura interna del monolito modular",
+      tech: [["auth","JWT + bcrypt + RBAC (HU-01)"],["auditoria","WORM SHA-256 (HU-02)"],["solicitudes","Comité, docs, checklist (HU-03/04/05)"],["garantias","Registro y verificación (HU-12)"],["evaluacion","Proyección agropecuaria (HU-06/07)"],["riesgo","Scoring y CORE sync (HU-08/09)"],["campo","Soporte PWA offline (HU-10)"],["monitoreo","Cron + alertas (HU-11)"]],
+      notes: ["Cada módulo: routes → controller → service → repository","Tests unitarios e integración con Jest","Comunicación inter-módulo: imports directos"],
+      hus: ["EP01","EP02","EP03","EP04","EP05","EP06"]
+    }
+  },
+  {
+    id: "cron", cat: "app", stereo: "scheduled task", title: "Cron · node-cron", icon: "clock",
+    x: 1080, y: 252, w: 220, h: 116,
+    desc: "Ejecución cada 60s.\nAlertas de vencimiento.",
+    pills: ["60s tick", "node-cron"],
+    detail: {
+      role: "Tarea programada para alertas de cartera",
+      tech: [["Lib","node-cron"],["Frecuencia","* * * * * (cada 60s)"],["Trigger","Vencimientos próximos / atrasos"]],
+      notes: ["Genera notificaciones automáticas (HU-11)","Solo se ejecuta en Nodo 1 (lock por tabla)"],
+      hus: ["HU-11"]
+    }
+  },
+  {
+    id: "uploads", cat: "app", stereo: "artifact", title: "Almacén de Archivos", icon: "folder",
+    x: 1080, y: 384, w: 220, h: 132,
+    desc: "PDF / JPG / PNG.\nMáx 10 MB por archivo.",
+    pills: ["Multer", "10MB/file", "SHA-256"],
+    detail: {
+      role: "Almacenamiento de documentos de expedientes",
+      tech: [["Lib","Multer"],["Formatos","PDF, JPG, PNG"],["Límite","10 MB / archivo"],["Hash","SHA-256 al ingreso"]],
+      notes: ["Vinculado a la solicitud por ID (HU-04)","Solo append en escritura — nunca sobreescribe"],
+      hus: ["HU-04"]
+    }
+  },
+  {
+    id: "pg-primary", cat: "data", stereo: "database", title: "PostgreSQL · Primaria", icon: "database",
+    x: 1370, y: 252, w: 260, h: 168,
+    desc: "Lectura + escritura.\nPersistencia de todo el dominio.",
+    pills: ["PG 15", "TLS", "Transactional"],
+    detail: {
+      role: "Base de datos relacional principal",
+      tech: [["Versión","PostgreSQL 15"],["Conexión","TCP 5432 + TLS"],["Pool","Pgbouncer · 100 conn"],["Schema","Solicitudes · Usuarios · Garantías · Evaluación"]],
+      notes: ["Transacciones ACID para flujos multi-módulo","Réplica streaming hacia Lectora","Ningún UPDATE/DELETE sobre tabla de auditoría"],
+      hus: ["EP01-EP06"]
+    }
+  },
+  {
+    id: "pg-replica", cat: "data", stereo: "database", title: "PostgreSQL · Réplica", icon: "database-zap",
+    x: 1370, y: 442, w: 260, h: 152,
+    desc: "Solo lectura.\nReportes sin afectar producción.",
+    pills: ["Read-only", "Streaming"],
+    detail: {
+      role: "Réplica de lectura para reportes",
+      tech: [["Versión","PostgreSQL 15"],["Modo","Streaming replication"],["Lag típico","< 200 ms"]],
+      notes: ["Atiende reportes de monitoreo (HU-11)","Sustituye a la primaria si ésta cae (promoción manual)"],
+      hus: ["HU-11"]
+    }
+  },
+  {
+    id: "worm", cat: "data", stereo: "artifact", title: "Tabla WORM · Auditoría", icon: "lock-2",
+    x: 1370, y: 616, w: 260, h: 156,
+    desc: "Encadenamiento SHA-256.\nNo permite UPDATE/DELETE.",
+    pills: ["WORM", "SHA-256", "Append-only"],
+    detail: {
+      role: "Bitácora inalterable de acciones críticas",
+      tech: [["Tabla","audit_log"],["Campos","id · user · timestamp · module · action · prev_hash · sha256"],["Trigger","BEFORE UPDATE/DELETE → RAISE"],["Validación","Recorrido del encadenamiento"]],
+      notes: ["Cada registro hace hash del anterior + payload (HU-02)","Romper la cadena delata adulteración","Solo rol Auditor puede consultarla"],
+      hus: ["HU-02"]
+    }
+  },
+  {
+    id: "backup", cat: "data", stereo: "artifact", title: "Backups Off-site", icon: "archive",
+    x: 1660, y: 252, w: 200, h: 168,
+    desc: "Copia diaria automática.\nRetención 30 días.",
+    pills: ["Daily", "30d", "Cifrado"],
+    detail: {
+      role: "Resguardo ante desastres",
+      tech: [["Frecuencia","Diaria 02:00"],["Retención","30 días"],["Cifrado","AES-256 en reposo"],["Restore RTO","≤ 4 h"]],
+      notes: ["Verificación de integridad semanal","Snapshots completos + WAL incremental"],
+      hus: []
+    }
+  },
+  {
+    id: "core", cat: "external", stereo: "external system", title: "CORE Bancario BDP", icon: "building",
+    x: 1660, y: 442, w: 200, h: 156,
+    desc: "Sistema central del banco.\nSync de operaciones.",
+    pills: ["REST", "TLS", "Retry x3"],
+    detail: {
+      role: "Sistema legacy del BDP — fuente de verdad operacional",
+      tech: [["Protocolo","REST sobre HTTPS"],["Auth","mTLS + API key"],["Reintentos","Máx. 3 con backoff"],["Timeout","10s"]],
+      notes: ["Sincroniza solicitudes aprobadas (HU-09)","Fallos se registran en log de errores","Operación asincrónica desde módulo riesgo"],
+      hus: ["HU-09"]
+    }
+  },
+  {
+    id: "fintech", cat: "external", stereo: "external system", title: "API Fintech · Scoring", icon: "trending-up",
+    x: 1660, y: 620, w: 200, h: 152,
+    desc: "Calificación crediticia A/B/C/D.\nProveedor externo.",
+    pills: ["REST", "API Key", "JSON"],
+    detail: {
+      role: "Servicio externo de scoring crediticio",
+      tech: [["Protocolo","REST · JSON"],["Auth","API key + IP allowlist"],["SLA","99.5%"],["Resultado","Categoría A · B · C · D"]],
+      notes: ["Consulta sincrónica al evaluar solicitud (HU-08)","Manejo de errores: degrada a evaluación manual"],
+      hus: ["HU-08"]
+    }
+  },
+];
+
+const DEVICES = [
+  { id: "d-clients", num: "01", label: "Capa Cliente",                          x: 56,   y: 200, w: 304, h: 524 },
+  { id: "d-edge",    num: "02", label: "Capa Edge / Seguridad",                  x: 386,  y: 200, w: 288, h: 504 },
+  { id: "d-app",     num: "03", label: "Capa Aplicación · Monolito Modular",     x: 700,  y: 200, w: 636, h: 624 },
+  { id: "d-data",    num: "04", label: "Capa Datos",                             x: 1346, y: 200, w: 308, h: 596 },
+  { id: "d-ext",     num: "05", label: "Sistemas Externos · Backups",            x: 1638, y: 200, w: 244, h: 596 },
+];
+
+const EDGES = [
+  { from: "browser",     to: "ssl",        type: "https",       label: "HTTPS · 443" },
+  { from: "field",       to: "ssl",        type: "https",       label: "HTTPS · sync" },
+  { from: "auditor",     to: "ssl",        type: "https",       label: "HTTPS · 443" },
+  { from: "ssl",         to: "lb",         type: "https",       label: "TLS terminado" },
+  { from: "lb",          to: "cdn",        type: "https",       label: "assets" },
+  { from: "lb",          to: "app1",       type: "https",       label: "REST" },
+  { from: "lb",          to: "app2",       type: "https",       label: "REST" },
+  { from: "app1",        to: "modules",    type: "tcp",         label: "loads" },
+  { from: "app2",        to: "modules",    type: "tcp",         label: "loads" },
+  { from: "app1",        to: "cron",       type: "async",       label: "schedule" },
+  { from: "app1",        to: "uploads",    type: "tcp",         label: "fs · 10MB" },
+  { from: "app1",        to: "pg-primary", type: "tcp",         label: "TCP 5432 · TLS" },
+  { from: "app2",        to: "pg-primary", type: "tcp",         label: "TCP 5432 · TLS" },
+  { from: "pg-primary",  to: "pg-replica", type: "replication", label: "streaming" },
+  { from: "app2",        to: "pg-replica", type: "tcp",         label: "read-only" },
+  { from: "pg-primary",  to: "worm",       type: "tls",         label: "append · SHA-256" },
+  { from: "pg-primary",  to: "backup",     type: "async",       label: "snapshot diario" },
+  { from: "app1",        to: "core",       type: "tls",         label: "REST · mTLS" },
+  { from: "app2",        to: "fintech",    type: "tls",         label: "REST · API key" },
+];
+
+const ICONS = {
+  monitor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+  tablet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg>',
+  "shield-user": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5z"/><circle cx="12" cy="10" r="2.5"/><path d="M8 16c1-1.6 2.4-2.5 4-2.5s3 .9 4 2.5"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+  "git-branch": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2.2"/><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="12" r="2.2"/><path d="M6 7v10M6 12c8 0 9-2 10-3"/></svg>',
+  cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1 0-8 6 6 0 0 1 11.5 1.5A3.5 3.5 0 0 1 18 18z"/></svg>',
+  server: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><circle cx="7" cy="7" r=".7" fill="currentColor"/><circle cx="7" cy="17" r=".7" fill="currentColor"/></svg>',
+  boxes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  database: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>',
+  "database-zap": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3M4 11v6c0 1.7 3.6 3 8 3M20 5v4"/><path d="M19 14l-3 4h4l-3 4" stroke-linejoin="miter"/></svg>',
+  "lock-2": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4M12 15v3"/></svg>',
+  archive: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="5" rx="1"/><path d="M5 8v11a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8M10 12h4"/></svg>',
+  building: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></svg>',
+  "trending-up": '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>',
+};
+
+/* ═══════════════════════════════════════════
+   3. DIAGRAM APP
+═══════════════════════════════════════════ */
+const { useState, useEffect, useMemo } = React;
+
+const TWEAK_DEFAULTS = { theme:"light", showFlow:true, showLayer_client:true, showLayer_edge:true, showLayer_app:true, showLayer_data:true, showLayer_external:true, showLayer_security:true, edgeStyle:"orthogonal" };
+
+function nodeById(id) { return NODES.find(n => n.id === id); }
+
+function getAnchor(node, side) {
+  const cx = node.x + node.w / 2, cy = node.y + node.h / 2;
+  switch (side) {
+    case "left":   return { x: node.x,          y: cy };
+    case "right":  return { x: node.x + node.w, y: cy };
+    case "top":    return { x: cx,              y: node.y };
+    case "bottom": return { x: cx,              y: node.y + node.h };
+    default:       return { x: cx,              y: cy };
+  }
+}
+
+function pickAnchors(a, b) {
+  const ax = a.x + a.w/2, ay = a.y + a.h/2;
+  const bx = b.x + b.w/2, by = b.y + b.h/2;
+  const dx = bx-ax, dy = by-ay;
+  if (Math.abs(dx) >= Math.abs(dy)) {
+    return dx >= 0 ? [getAnchor(a,"right"), getAnchor(b,"left")] : [getAnchor(a,"left"), getAnchor(b,"right")];
+  } else {
+    return dy >= 0 ? [getAnchor(a,"bottom"), getAnchor(b,"top")] : [getAnchor(a,"top"), getAnchor(b,"bottom")];
+  }
+}
+
+function orthogonalPath(p1, p2) {
+  const r=8, dx=p2.x-p1.x, dy=p2.y-p1.y;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    const midX = p1.x + dx/2;
+    return `M ${p1.x},${p1.y} L ${midX-Math.sign(dx)*r},${p1.y} Q ${midX},${p1.y} ${midX},${p1.y+Math.sign(dy)*r} L ${midX},${p2.y-Math.sign(dy)*r} Q ${midX},${p2.y} ${midX+Math.sign(dx)*r},${p2.y} L ${p2.x},${p2.y}`;
+  } else {
+    const midY = p1.y + dy/2;
+    return `M ${p1.x},${p1.y} L ${p1.x},${midY-Math.sign(dy)*r} Q ${p1.x},${midY} ${p1.x+Math.sign(dx)*r},${midY} L ${p2.x-Math.sign(dx)*r},${midY} Q ${p2.x},${midY} ${p2.x},${midY+Math.sign(dy)*r} L ${p2.x},${p2.y}`;
+  }
+}
+
+function curvedPath(p1, p2) {
+  const dx=p2.x-p1.x;
+  return `M ${p1.x},${p1.y} C ${p1.x+dx*.5},${p1.y} ${p2.x-dx*.5},${p2.y} ${p2.x},${p2.y}`;
+}
+
+function midPoint(p1, p2) { return { x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2 }; }
+
+function NodeCard({ node, onClick, active, dimmed }) {
+  const iconSvg = ICONS[node.icon] || "";
+  return (
+    <div className={`node${dimmed?" hidden-layer":""}`} data-cat={node.cat} data-active={active?"true":"false"}
+         style={{ left:node.x, top:node.y, width:node.w, minHeight:node.h }}
+         onClick={(e) => { e.stopPropagation(); onClick(node); }}>
+      <div className="stereo">{node.stereo}</div>
+      <div className="title">
+        <span className="icon" dangerouslySetInnerHTML={{ __html: iconSvg }} />
+        {node.title}
+      </div>
+      {node.desc && <div className="desc" style={{ whiteSpace:"pre-line" }}>{node.desc}</div>}
+      {node.pills && node.pills.length > 0 && (
+        <div className="pills">{node.pills.map((p,i) => <span key={i} className="pill">{p}</span>)}</div>
+      )}
+    </div>
+  );
+}
+
+function DeviceShell({ device, dimmed }) {
+  return (
+    <div className={`device${dimmed?" hidden-layer":""}`}
+         style={{ left:device.x, top:device.y, width:device.w, height:device.h }}>
+      <div className="device-label"><span className="num">{device.num}</span>{device.label}</div>
+    </div>
+  );
+}
+
+function EdgesLayer({ tweaks, hoveredId, activeId }) {
+  const edgePaths = useMemo(() => {
+    return EDGES.map((e,i) => {
+      const a = nodeById(e.from), b = nodeById(e.to);
+      if (!a || !b) return null;
+      const [p1,p2] = pickAnchors(a,b);
+      const d = tweaks.edgeStyle === "curved" ? curvedPath(p1,p2) : orthogonalPath(p1,p2);
+      return { ...e, idx:i, p1, p2, d, mid:midPoint(p1,p2) };
+    }).filter(Boolean);
+  }, [tweaks.edgeStyle]);
+
+  const isHidden = (cat) => !tweaks[`showLayer_${cat}`];
+
+  return (
+    <svg className="layer edges" width="1920" height="1080" viewBox="0 0 1920 1080" style={{ pointerEvents:"none" }}>
+      <defs>
+        {["https","tcp","tls","async","replication"].map(t => (
+          <marker key={t} id={`arr-${t}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill={t==="https"?"var(--navy)":t==="tcp"?"var(--moss)":t==="tls"?"var(--crimson)":t==="async"?"var(--amber)":"var(--violet)"} />
+          </marker>
+        ))}
+      </defs>
+      {edgePaths.map((e) => {
+        const fn = nodeById(e.from), tn = nodeById(e.to);
+        const dim = isHidden(fn.cat) || isHidden(tn.cat);
+        const hi = hoveredId && (e.from===hoveredId || e.to===hoveredId);
+        const ac = activeId  && (e.from===activeId  || e.to===activeId);
+        const opacity = dim ? 0.08 : (hoveredId||activeId ? (hi||ac?1:0.18) : 0.85);
+        return (
+          <g key={`p-${e.idx}`} style={{ opacity, transition:"opacity .25s" }}>
+            <path d={e.d} className={e.type} markerEnd={`url(#arr-${e.type})`} strokeWidth={hi||ac?2.2:1.5} />
+          </g>
+        );
+      })}
+      {edgePaths.map((e) => {
+        const fn = nodeById(e.from), tn = nodeById(e.to);
+        if (isHidden(fn.cat)||isHidden(tn.cat)) return null;
+        return (
+          <text key={`l-${e.idx}`} x={e.mid.x} y={e.mid.y-2} className="edge-label" textAnchor="middle">{e.label}</text>
+        );
+      })}
+      {tweaks.showFlow && edgePaths.map((e) => {
+        const fn = nodeById(e.from), tn = nodeById(e.to);
+        if (isHidden(fn.cat)||isHidden(tn.cat)) return null;
+        const dur = 4+(e.idx%5)*.6, delay=(e.idx*.3)%4;
+        return (
+          <circle key={`pk-${e.idx}`} r="3.5" className={`packet ${e.type}`}>
+            <animateMotion dur={`${dur}s`} begin={`${delay}s`} repeatCount="indefinite" path={e.d} rotate="auto" />
+          </circle>
+        );
+      })}
+    </svg>
+  );
+}
+
+function DetailPanel({ node, onClose }) {
+  if (!node) return null;
+  const catLabel = ({client:"Capa Cliente",edge:"Edge / Red",app:"Aplicación",data:"Datos",external:"Externo",security:"Seguridad"})[node.cat] || node.cat;
+  return (
+    <div className="panel" key={node.id}>
+      <button className="panel-close" onClick={onClose}>×</button>
+      <div className="panel-stereo">«{node.stereo}»</div>
+      <h3>{node.title}</h3>
+      <div className="panel-cat">Categoría · {catLabel}</div>
+      {node.detail?.role && <div style={{ fontSize:13, color:"var(--ink)", lineHeight:1.5 }}>{node.detail.role}</div>}
+      {node.detail?.tech && (
+        <div className="panel-section">
+          <h4>Especificación técnica</h4>
+          {node.detail.tech.map(([k,v],i) => (
+            <div key={i} className="kv"><span className="k">{k}</span><span className="v">{v}</span></div>
+          ))}
+        </div>
+      )}
+      {node.detail?.notes?.length > 0 && (
+        <div className="panel-section">
+          <h4>Notas de despliegue</h4>
+          <ul>{node.detail.notes.map((n,i) => <li key={i}>{n}</li>)}</ul>
+        </div>
+      )}
+      {node.detail?.hus?.length > 0 && (
+        <div className="panel-section">
+          <h4>Historias de Usuario</h4>
+          <div style={{ display:"flex", flexWrap:"wrap", gap:6 }}>
+            {node.detail.hus.map((h,i) => <span key={i} className="pill">{h}</span>)}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [activeNodeId, setActiveNodeId] = useState(null);
+  const [hoveredId, setHoveredId] = useState(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", tweaks.theme);
+  }, [tweaks.theme]);
+
+  const activeNode = activeNodeId ? nodeById(activeNodeId) : null;
+  const isHidden = (cat) => !tweaks[`showLayer_${cat}`];
+  const deviceDimmed = (id) => {
+    if (id==="d-edge") return isHidden("edge") && isHidden("security");
+    if (id==="d-ext")  return isHidden("external") && isHidden("data");
+    const map = {"d-clients":"client","d-app":"app","d-data":"data"};
+    return isHidden(map[id]);
+  };
+
+  return (
+    <>
+      <div className="grid-bg" />
+      <div className="reg-mark tl"/><div className="reg-mark tr"/>
+      <div className="reg-mark bl"/><div className="reg-mark br"/>
+
+      <div className="header">
+        <div className="h-left">
+          <div className="eyebrow">UML · Deployment Diagram · v3.0</div>
+          <h1>Diagrama de <span className="accent">Despliegue</span></h1>
+          <div className="sub">Banco de Desarrollo Productivo S.A.M. — Sistema de gestión crediticia agropecuaria. Arquitectura monolítica modular · Node.js · PostgreSQL · PWA offline.</div>
+        </div>
+        <div className="h-right">
+          <div className="stamp">BDP · Crédito</div>
+          <div className="meta-line">DOC-ARQ-DEP · 04 / 2026</div>
+          <div className="meta-line">B. CASTILLO C. · P2</div>
+          <div className="meta-line">UAB · ING. SOFTWARE</div>
+        </div>
+      </div>
+
+      {DEVICES.map(d => <DeviceShell key={d.id} device={d} dimmed={deviceDimmed(d.id)} />)}
+
+      <EdgesLayer tweaks={tweaks} hoveredId={hoveredId} activeId={activeNodeId} />
+
+      {NODES.map(n => (
+        <div key={n.id} onMouseEnter={() => setHoveredId(n.id)} onMouseLeave={() => setHoveredId(null)}
+             style={{ position:"absolute", left:0, top:0, width:"100%", height:"100%", pointerEvents:"none" }}>
+          <div style={{ pointerEvents:"auto" }}>
+            <NodeCard node={n} onClick={(node) => setActiveNodeId(node.id===activeNodeId?null:node.id)}
+                      active={n.id===activeNodeId} dimmed={isHidden(n.cat)} />
+          </div>
+        </div>
+      ))}
+
+      {activeNode && <DetailPanel node={activeNode} onClose={() => setActiveNodeId(null)} />}
+
+      <div className="legend">
+        <div className="legend-item"><div className="legend-line https"></div>HTTPS · REST</div>
+        <div className="legend-item"><div className="legend-line tls"></div>TLS · mTLS</div>
+        <div className="legend-item"><div className="legend-line tcp"></div>TCP / SQL</div>
+        <div className="legend-item"><div className="legend-line async"></div>Async · Cron</div>
+        <div className="legend-item"><div className="legend-line replication"></div>Replicación</div>
+      </div>
+
+      <div className="footer">
+        <div className="corner"><div className="dot"></div><span>BANCO DE DESARROLLO PRODUCTIVO · S.A.M.</span></div>
+        <div className="corner"><span>HU-01 → HU-12 · 6 Épicas · 8 Módulos · 500 usuarios concurrentes</span></div>
+        <div className="corner"><span>P. 01 / 01</span><div className="dot"></div></div>
+      </div>
+
+      <TweaksPanel title="⚙ Controles">
+        <TweakSection label="Tema">
+          <TweakRadio label="Modo" value={tweaks.theme} onChange={(v) => setTweak("theme",v)}
+            options={[{value:"light",label:"Claro"},{value:"dark",label:"Oscuro"}]} />
+        </TweakSection>
+        <TweakSection label="Conexiones">
+          <TweakRadio label="Estilo" value={tweaks.edgeStyle} onChange={(v) => setTweak("edgeStyle",v)}
+            options={[{value:"orthogonal",label:"Ortogonal"},{value:"curved",label:"Curvas"}]} />
+          <TweakToggle label="Animación de flujo" value={tweaks.showFlow} onChange={(v) => setTweak("showFlow",v)} />
+        </TweakSection>
+        <TweakSection label="Capas visibles">
+          <TweakToggle label="01 · Cliente"  value={tweaks.showLayer_client}   onChange={(v) => setTweak("showLayer_client",v)} />
+          <TweakToggle label="02 · Edge"     value={tweaks.showLayer_edge}     onChange={(v) => setTweak("showLayer_edge",v)} />
+          <TweakToggle label="03 · App"      value={tweaks.showLayer_app}      onChange={(v) => setTweak("showLayer_app",v)} />
+          <TweakToggle label="04 · Datos"    value={tweaks.showLayer_data}     onChange={(v) => setTweak("showLayer_data",v)} />
+          <TweakToggle label="05 · Externos" value={tweaks.showLayer_external} onChange={(v) => setTweak("showLayer_external",v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+</body>
+</html>
