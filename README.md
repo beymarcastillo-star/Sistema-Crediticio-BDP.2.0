@@ -15,7 +15,7 @@ docs/
 │   ├── BEYMAR/
 │   ├── GRUPO/
 │   ├── KEVIN/
-│   └── NORMA/
+│   └── JOSE/
 └── referencia/       → Guías, entrevistas y documentos base de la consultoría
 ```
 
@@ -33,6 +33,6 @@ docs/
 | Rol | Nombre |
 |-----|--------|
 | Gestor de Pilas | Miguel Angel Chura Condori |
-| Dev P1 | Norma Mendoza Layme / Nicole Abigail Arratia Chipana |
+| Dev P1 | Jose Alcozer Martinez / Nicole Abigail Arratia Chipana |
 | Dev P2 | Roger Huarachi Rojas / Beymar Castillo Córdova |
 | Dev P3 | Kevin Jhonatan Rocha / (ángel) |
