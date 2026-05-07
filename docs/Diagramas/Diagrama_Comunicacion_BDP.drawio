@@ -1,0 +1,623 @@
+<mxfile host="app.diagrams.net" pages="12">
+  <diagram name="RF-01: Login" id="rf01">
+    <mxGraphModel dx="1373" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-01: Validación de Credenciales de Usuario (Login seguro y roles)" vertex="1">
+          <mxGeometry height="30" width="1220" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Usuario" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="auth" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuthController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="usersvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="UserService" vertex="1">
+          <mxGeometry height="100" width="100" x="620" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="950" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="session" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="SessionManager" vertex="1">
+          <mxGeometry height="100" width="100" x="620" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog" vertex="1">
+          <mxGeometry height="100" width="100" x="950" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="auth" value="1: login(usuario, pass)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="auth" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="usersvc" value="2: validarCredenciales()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="usersvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="3: consultarUsuario()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="db" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="usersvc" value="4: datosUsuario">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="auth" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="session" value="5: verificarRol()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="session" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="auth" value="6: tokenSesion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="auth" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="7: registrarIntento()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="auth" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="8: accesoConcedido/Denegado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-02: Formularios Crédito" id="rf02">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-02: Gestión de Formularios del Proceso de Crédito" vertex="1">
+          <mxGeometry height="30" width="1300" x="-10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Analista" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="form" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FormController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="solsvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="SolicitudService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="client" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ClienteService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog" vertex="1">
+          <mxGeometry height="100" width="100" x="830" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="form" value="1: crearSolicitud(clienteId)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="form" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="client" value="2: validarCliente()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="client" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="3: consultarCliente()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="db" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="client" value="4: datosCliente">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="form" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="solsvc" value="5: iniciarSolicitud()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="solsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="6: guardarSolicitud()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="solsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="7: registrarAccion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="form" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="8: solicitudCreada(id)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-03: Eval. Financiera" id="rf03">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-03: Evaluación con Estados Financieros" vertex="1">
+          <mxGeometry height="30" width="1300" x="-10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Analista" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="evalctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EvalFinController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="evalsvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EvalFinService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="calc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="CalculadoraFlujo" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="evalctl" value="1: ingresarEstadosFinancieros()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="evalctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="evalsvc" value="2: registrarDatos()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="evalsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="calc" value="3: calcularIndicadores()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="calc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="evalsvc" value="4: resultadosCalculo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="evalsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="5: guardarEvaluacion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="evalsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="6: registrarLog()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="evalctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: evaluacionRegistrada">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-04: Eval. Productiva" id="rf04">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-04: Evaluación Productiva Sectorial" vertex="1">
+          <mxGeometry height="30" width="1300" x="-10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Analista" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EvalProdController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EvalProdService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sim" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="SimuladorEscenario" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="report" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ReporteService" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: ingresarParametros(tipo)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: iniciarEvaluacion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="sim" value="3: simularEscenario()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="sim" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: resultadoSimulacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="5: guardarResultados()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="report" value="6: generarReporteSectorial()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: reporteGenerado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-05: Generación Eval. Auto" id="rf05">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-05: Generación Automática de Evaluaciones Financieras (Flujo, Balances, Índices)" vertex="1">
+          <mxGeometry height="30" width="1300" x="-10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Sistema/Analista" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FinController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FinService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="calc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="CalculadoraAuto" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="export" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ExportService" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: solicitarEvaluacionAuto()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: obtenerDatosFinancieros()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="calc" value="3: calcularFlujo_Balances_Indices()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="calc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: resultadosCompletos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="5: persistirResultados()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="export" value="6: exportarPDF_Excel()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: archivoExportado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-06: Integración CORE" id="rf06">
+    <mxGraphModel dx="1373" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-06: Integración vía API REST con el CORE Bancario (JSON, JWT)" vertex="1">
+          <mxGeometry height="30" width="1300" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Sistema BDP" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="gw" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="APIGateway" vertex="1">
+          <mxGeometry height="100" width="100" x="310" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="jwt" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="JWTService" vertex="1">
+          <mxGeometry height="100" width="100" x="320" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="intctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="IntegracionCtrl" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="intsvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="IntegracionService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="core" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="CORE Bancario" vertex="1">
+          <mxGeometry height="100" width="100" x="1020" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog" vertex="1">
+          <mxGeometry height="100" width="100" x="1020" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="gw" value="1: solicitarIntegracion(datos)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="gw" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="jwt" value="2: generarJWT()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="jwt" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="gw" value="3: token JWT">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="gw" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="intctl" value="4: enviarRequest(JSON+JWT)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="intctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="intsvc" value="5: procesarEnvio()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="intsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="core" value="6: POST /api/credito (JSON)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="core" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="intsvc" value="7: respuestaCORE (200 OK)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="intsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="8: registrarTransaccion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="intctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="9: integracionExitosa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-07: Reportes PDF/Excel" id="rf07">
+    <mxGraphModel dx="1373" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-07: Generación Automática de Reportes (PDF y Excel)" vertex="1">
+          <mxGeometry height="30" width="1300" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Usuario" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ReporteController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ReporteService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="gen" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="GeneradorArchivos" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="store" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FileStorage" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: solicitarReporte(tipo, id)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: obtenerDatos()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="3: consultarBD()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="db" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: datosCompletos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="gen" value="5: generarPDF_Excel(datos)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="gen" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="store" value="6: almacenarArchivo()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: urlDescarga">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-08: Auditoría" id="rf08">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="750" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-08: Registro de Logs de Auditoría (INSERT, UPDATE, DELETE)" vertex="1">
+          <mxGeometry height="30" width="1300" x="-20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Sistema/Usuario" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EntidadController" vertex="1">
+          <mxGeometry height="100" width="100" x="320" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="EntidadService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog&#xa;(WORM)" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: operacion(INSERT/UPDATE/DELETE)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: ejecutarOperacion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="3: persistirCambio()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="db" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: cambioConfirmado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="5: registrarLog(entidad, accion, usuario, ip)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="audit" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="6: logInmutableRegistrado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: operacionExitosa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-09: RBAC Permisos" id="rf09">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-09: Gestión de Permisos por Rol (RBAC)" vertex="1">
+          <mxGeometry height="30" width="1300" x="-70" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Administrador" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="RBACController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="rolsvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="RolService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="permsvc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="PermisoService" vertex="1">
+          <mxGeometry height="100" width="100" x="550" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="AuditoriaLog" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: asignarPermiso(rolId, permisoId)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="rolsvc" value="2: validarRol()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="rolsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="3: rolValido">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="permsvc" value="4: verificarPermiso()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="permsvc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="5: permisoDisponible">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="6: guardarAsignacion()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="audit" value="7: registrarCambio()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="8: permisoAsignado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-10: Archivos Adjuntos" id="rf10">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-10: Carga y Almacenamiento Seguro de Archivos Digitales Adjuntos" vertex="1">
+          <mxGeometry height="30" width="1300" x="-20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Usuario" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="DocController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="DocService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="valid" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ValidadorArchivo" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="store" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FileStorage" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: subirArchivo(file, solicitudId)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: procesarCarga()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="valid" value="3: validarTipo_Tamaño()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="valid" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: archivoValido">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="store" value="5: almacenarEnDirectorioSeguro()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="store" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="6: rutaArchivo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="7: registrarDocumento(ruta, estado)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="8: cargaExitosa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-11: Scoring Riesgo" id="rf11">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-11: Automatización de Calificación de Riesgo (Scoring) por Variables Sectoriales" vertex="1">
+          <mxGeometry height="30" width="1300" x="-10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Sistema" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ScoringController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="ScoringService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="api" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="FintechAPI" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="motor" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="MotorRiesgo" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: calcularScoring(solicitudId)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: obtenerVariables()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="api" value="3: consultarAPIFintech(nit)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="api" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: historialCrediticio">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="motor" value="5: procesarVariablesSectoriales()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="motor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="6: puntaje + nivelRiesgo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="7: guardarScoring()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="8: scoringGenerado(puntaje, nivel)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="RF-12: Monitoreo Tiempo Real" id="rf12">
+    <mxGraphModel dx="2673" dy="749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontStyle=1;fontSize=14;align=center;" value="RF-12: Seguimiento y Monitoreo en Tiempo Real de Transacciones Crediticias" vertex="1">
+          <mxGeometry height="30" width="1300" x="-40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="actor" parent="1" style="shape=mxgraph.archimate3.actor;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=11;verticalLabelPosition=bottom;verticalAlign=top;" value="Supervisor" vertex="1">
+          <mxGeometry height="70" width="60" x="80" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="ctl" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="MonitorController" vertex="1">
+          <mxGeometry height="100" width="100" x="300" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="svc" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="MonitorService" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="db" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="BaseDatos" vertex="1">
+          <mxGeometry height="100" width="100" x="650" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="Dashboard&#xa;WebSocket" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="notif" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#23A0D5;strokeWidth=2;fontSize=11;fontStyle=1;aspect=fixed;verticalLabelPosition=bottom;verticalAlign=top;labelBackgroundColor=none;" value="NotificaService" vertex="1">
+          <mxGeometry height="100" width="100" x="980" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="actor" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="ctl" value="1: consultarEstadoTransacciones()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="2: obtenerTransacciones()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="db" value="3: consultarEstados_Tiempos()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="db" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="svc" value="4: listaTransacciones">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="dash" value="5: emitirEvento(estado, tiempo)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="svc" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="notif" value="6: alertarDemoras()">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="ctl" style="endArrow=open;endFill=0;endSize=8;edgeStyle=none;fontSize=10;fontStyle=0;labelBackgroundColor=#ffffff;" target="actor" value="7: vistaActualizada">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
