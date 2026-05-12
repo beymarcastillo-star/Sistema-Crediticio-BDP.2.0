@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - principal
+      - main  # Sincronizado con tu rama local
 
 jobs:
   build:
