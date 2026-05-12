@@ -2,7 +2,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - principal
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
