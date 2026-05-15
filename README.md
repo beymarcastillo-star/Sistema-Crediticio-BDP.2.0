@@ -32,7 +32,7 @@ docs/
 
 | Rol | Nombre |
 |-----|--------|
-| Gestor de Pilas | Miguel Angel Chura Condori |
+| Gestor de Pilas | Roger Huarachi Rojas  |
 | Dev P1 | Jose Alcozer Martinez / Nicole Abigail Arratia Chipana |
 | Dev P2 | Roger Huarachi Rojas / Beymar Castillo Córdova |
-| Dev P3 | Kevin Jhonatan Rocha / (ángel) |
+| Dev P3 | Kevin Jhonatan Rocha / Miguel Angel Chura Condori |
